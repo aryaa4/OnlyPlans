@@ -1,26 +1,348 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   ONLYPLANS DESIGN TOKENS
+   All colors are hardcoded — no Tailwind defaults.
+───────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary:    #FFF7F2;
+  --bg-secondary:  #FFFFFF;
+  --bg-section:    #FDEEE6;
+
+  --peach-light:   #FFD3AC;
+  --peach-soft:    #FFB5AB;
+  --peach-warm:    #E39A7B;
+
+  --text-primary:   #3E362E;
+  --text-secondary: #93785B;
+  --text-muted:     #A69080;
+
+  --cta:    #E85A4F;
+  --now:    #E85A4F;
+  --soon:   #EFB11D;
+  --collab: #865D36;
+
+  --border:      #EAE7DC;
+  --shadow-soft: rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.05);
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─────────────────────────────────────────────
+   BASE RESET — placed inside @layer base so it
+   wins over Tailwind's preflight layer.
+───────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  html {
+    height: 100%;
+    background-color: #FFF7F2;
+    overscroll-behavior: none;
+  }
+
+  body {
+    height: 100%;
+    background-color: #FFF7F2;
+    color: #3E362E;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide scrollbars */
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─────────────────────────────────────────────
+   PAGE SHELL
+───────────────────────────────────────────── */
+.page-container {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  background-color: #FFF7F2;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────
+   CARDS
+───────────────────────────────────────────── */
+.card {
+  background-color: #FFFFFF;
+  border: 1px solid #EAE7DC;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+}
+
+.card-section {
+  background-color: #FDEEE6;
+  border: 1px solid #EAE7DC;
+  border-radius: 18px;
+}
+
+/* ─────────────────────────────────────────────
+   MODE PILLS
+───────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.pill-now    { background-color: #FFFFFF; color: #E85A4F; border: 1px solid #EAE7DC; }
+.pill-soon   { background-color: #FFFFFF; color: #EFB11D; border: 1px solid #EAE7DC; }
+.pill-collab { background-color: #FFFFFF; color: #865D36; border: 1px solid #EAE7DC; }
+
+/* ─────────────────────────────────────────────
+   TAG CHIPS
+───────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #FDEEE6;
+  color: #93785B;
+  border: 1px solid #EAE7DC;
+}
+
+/* ─────────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────────── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: 18px;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: #E85A4F;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(232, 90, 79, 0.28);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover  { opacity: 0.91; transform: translateY(-1px); }
+.btn-primary:active { opacity: 1; transform: scale(0.98); }
+.btn-primary:disabled {
+  background-color: #EAE7DC;
+  color: #A69080;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 18px;
+  font-weight: 600;
+  font-size: 15px;
+  background-color: #FDEEE6;
+  color: #3E362E;
+  border: 1.5px solid #EAE7DC;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+.btn-secondary:hover { background-color: #F5E8DF; }
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: 18px;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: transparent;
+  color: #93785B;
+  border: 1.5px solid #EAE7DC;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+.btn-ghost:hover { background-color: #FDEEE6; }
+
+/* ─────────────────────────────────────────────
+   INPUT
+───────────────────────────────────────────── */
+.input-field {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 18px;
+  background-color: #FFFFFF;
+  border: 1.5px solid #EAE7DC;
+  color: #3E362E;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  /* Light colorscheme for date/time pickers */
+  color-scheme: light;
+}
+.input-field::placeholder { color: #A69080; }
+.input-field:focus {
+  border-color: #E39A7B;
+  box-shadow: 0 0 0 3px rgba(227, 154, 123, 0.16);
+}
+
+/* ─────────────────────────────────────────────
+   INTEREST CHIP
+───────────────────────────────────────────── */
+.interest-chip {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #EAE7DC;
+  background-color: #FFFFFF;
+  color: #93785B;
+  transition: all 0.15s ease;
+  font-family: 'Inter', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.interest-chip.selected {
+  background-color: #FFFFFF;
+  border-color: #E85A4F;
+  color: #E85A4F;
+}
+
+/* ─────────────────────────────────────────────
+   LIVE DOT PULSE
+───────────────────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+}
+.live-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: #E85A4F;
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+.live-dot-inner {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #E85A4F;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────
+   BOTTOM NAV
+───────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background-color: rgba(255, 247, 242, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid #EAE7DC;
+  padding: 10px 32px 20px;
+  z-index: 100;
+}
+
+/* ─────────────────────────────────────────────
+   AVATAR RING (verified)
+───────────────────────────────────────────── */
+.avatar-ring-verified {
+  box-shadow: 0 0 0 2px #FFF7F2, 0 0 0 4px #E85A4F;
+}
+
+/* ─────────────────────────────────────────────
+   SAFE AREA
+───────────────────────────────────────────── */
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+.pt-safe { padding-top:    env(safe-area-inset-top, 20px); }
+
+/* ─────────────────────────────────────────────
+   GRADIENT TEXT HELPERS
+   Use a <span> with these classes.
+   Do NOT mix background shorthand + backgroundClip
+   on the same element in JS.
+───────────────────────────────────────────── */
+.text-gradient-brand {
+  color: #E85A4F;
+}
+.text-gradient-now {
+  color: #E85A4F;
+}
+.text-gradient-soon {
+  color: #EFB11D;
+}
+.text-gradient-collab {
+  color: #865D36;
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.float-in { animation: floatIn 0.35s ease forwards; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background-image: linear-gradient(90deg, #FDEEE6 25%, #FFF7F2 50%, #FDEEE6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
 }
